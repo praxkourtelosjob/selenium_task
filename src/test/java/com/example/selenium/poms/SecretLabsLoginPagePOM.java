@@ -2,6 +2,7 @@ package com.example.selenium.poms;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -27,9 +28,10 @@ public class SecretLabsLoginPagePOM {
     }
 
     public void login(String uname, String password) {
-        userNameField.sendKeys(uname);
-        passwordField.sendKeys(password);
-        loginButton.click();
+        Actions login = new Actions(this.driver)
+                .sendKeys(userNameField, uname)
+                .sendKeys(passwordField, password).click(loginButton);
+        login.perform();
     }
 
     public void navigate() {
@@ -51,5 +53,17 @@ public class SecretLabsLoginPagePOM {
     public WebElement getErrorMessageContainer() {
         PageFactory.initElements(driver, this);
         return errorMessageContainer;
+    }
+
+    public void sendUsername(String uname) {
+        userNameField.sendKeys(uname);
+    }
+
+    public void sendPasssword(String pass) {
+        passwordField.sendKeys(pass);
+    }
+
+    public void clickLogin() {
+        this.loginButton.click();
     }
 }
